@@ -1,0 +1,44 @@
+# Start with an empty pipeline
+resources:
+  repositories:
+  - repository: self
+
+# Define the pipeline stages
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          # Check out the repository
+          - checkout: self
+          # Install Python and any required libraries
+          - script: |
+              sudo apt-get update
+              sudo apt-get install -y python3 python3-pip
+              pip3 install pandas
+              pip3 install SQLAlchemy
+              pip3 install pyodbc
+              pip3 install datetime
+              pip3 install time
+              pip3 install requests
+              pip3 install os
+              pip3 install json
+              pip3 install -r requirements.txt
+            displayName: 'Install Python and dependencies'
+
+          # Run the Python script
+          - script: |
+              python3 TomTom_Traffic_Data.py > output_tomtom.txt
+            displayName: 'Run Python script'
+          # Pass the stored secrets as enviroment variables that can be used in the python script
+            env:
+              nigeria: $(NIGERIA)
+              warsaw: $(WARSAW)
+              losangeles: $(LOSANGELES)
+
+          # Print the output of the Python script
+          - script: |
+              cat output_tomtom.txt
+            displayName: 'Print output'
