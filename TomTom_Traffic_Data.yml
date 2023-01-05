@@ -2,6 +2,13 @@
 resources:
   repositories:
   - repository: self
+    schedules:
+    - cron: "0 8 * * *"
+      displayName: Daily build schedule
+      branches:
+        include:
+        - main
+      always: true
 
 # Define the pipeline stages
 stages:
@@ -25,18 +32,20 @@ stages:
               pip3 install requests
               pip3 install os
               pip3 install json
+              pip3 install azure.storage.blob
               pip3 install -r requirements.txt
             displayName: 'Install Python and dependencies'
 
           # Run the Python script
           - script: |
-              python3 TomTom_Traffic_Data.py > output_tomtom.txt
+              python3 TomTom_Traffic_Data2.py > output_tomtom.txt
             displayName: 'Run Python script'
-          # Pass the stored secrets as enviroment variables that can be used in the python script
             env:
               nigeria: $(NIGERIA)
               warsaw: $(WARSAW)
               losangeles: $(LOSANGELES)
+              account_name: $(ACCOUNT_NAME)
+              account_key: $(ACCOUNT_KEY)
 
           # Print the output of the Python script
           - script: |
