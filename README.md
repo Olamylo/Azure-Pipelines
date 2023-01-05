@@ -1,13 +1,27 @@
-# Azure Pipelines
+# CI/CD with Azure Pipelines
  
  This is a sample pipeline on Azure DevOps pipeline.
- The piepline shows how to use variables to store credentials and ultiumately utilize them in a python script as enviroment variables.
+ The piepline utilizes data from a sample API (TOMTOM Traffic data for 3 regions)
+ 
+ Azure pipelines enables the use of variables to store credentials and ultiumately utilize them in script to be run in the pipeline 
+ these credentials are stored as enviroment variables and can be called in scripts where needed.
+ 
+ ![image](https://user-images.githubusercontent.com/66565804/210675116-333fe3f2-bb00-40b6-a181-e98b5afaf962.png)
 
 
-![image](https://user-images.githubusercontent.com/66565804/210282394-d4e183d8-8c37-4511-b0bc-c1fa93aaa881.png)
+ A python script 'TomTom_Traffic_Data.py' which extracts data from the API and uploads the data to a Azure blob in a container.
+ This upload processes is facilitated by Azure blob storage modules.
+ To set up connectivity to blob storage, a storage account name and a storage account key are needed. 
+ This can be found in the network & security tab of the storage account on Azure portal.
+
+Azure pipeline provides an Analytics tab where detailed information about the pipeline runs can be found.
+
+![image](https://user-images.githubusercontent.com/66565804/210675298-30073769-c211-48f0-893b-a030f0de2932.png)
 
 
+![image](https://user-images.githubusercontent.com/66565804/210675462-de1a629e-7e96-4875-9047-cd82d37adf6c.png)
 
-Pipeline run summary
-![image](https://user-images.githubusercontent.com/66565804/210282524-e82db45a-1dcb-49d9-a0b3-453b0bc31d06.png)
+
+Azure pipelines also provides options to set up scheduled runs for pipelines. 
+This can be done either in the yaml file of the pipeline of by using the UI.
 
